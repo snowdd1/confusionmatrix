@@ -33,17 +33,17 @@ def pretty_confusionmatrix(confusionmatrix: np.ndarray, textlabels:list=['Positi
         c2 = 4+columns
         r1 = 2
 
-        m[r1 +0,c1   ] = mtext('True Positive Rate = Recall = Sensitivity', f"Of all {textlabels[0]}s, we detected {confusionmatrix[0,0]/sum(confusionmatrix[0]):,.0%} ")
-        m[r1 +0,c1+1 ] = f'{confusionmatrix[0,0]/sum(confusionmatrix[0]):,.0%}'
+        m[r1 +0,c1   ] = mtext('True Positive Rate = Recall = Sensitivity', f"Of all {textlabels[0]}s, we detected {confusionmatrix[0,0]/(confusionmatrix[0].sum)():,.0%} ")
+        m[r1 +0,c1+1 ] = f'{confusionmatrix[0,0]/(confusionmatrix[0].sum()):,.0%}'
         
-        m[r1 +1,c1   ] = mtext('False Positive Rate = Fall-out = P(false alarm)', f'Of all {textlabels[1]}s, we predicted {confusionmatrix[1,0]/sum(confusionmatrix[1]):,.0%} to be {textlabels[0]}s' ) 
-        m[r1 +1,c1+1 ] = f'{confusionmatrix[1,0]/sum(confusionmatrix[1]):,.0%}'
+        m[r1 +1,c1   ] = mtext('False Positive Rate = Fall-out = P(false alarm)', f'Of all {textlabels[1]}s, we predicted {confusionmatrix[1,0]/(confusionmatrix[1].sum()):,.0%} to be {textlabels[0]}s' ) 
+        m[r1 +1,c1+1 ] = f'{confusionmatrix[1,0]/(confusionmatrix[1].sum()):,.0%}'
         
-        m[r1 ,c2    ] = mtext('False Negative Rate = Miss Rate', f'Of all the {textlabels[0]}s, we misdetected {confusionmatrix[0,1]/sum(confusionmatrix[0]):,.0%}' )
-        m[r1 ,c2 + 1] = f'{confusionmatrix[0,1]/sum(confusionmatrix[0]):,.0%}'
+        m[r1 ,c2    ] = mtext('False Negative Rate = Miss Rate', f'Of all the {textlabels[0]}s, we misdetected {confusionmatrix[0,1]/confusionmatrix[0].sum():,.0%}' )
+        m[r1 ,c2 + 1] = f'{confusionmatrix[0,1]/confusionmatrix[0].sum():,.0%}'
 
-        m[r1 +1,c2 ] = mtext('Specificity (SPC), Selectivity, True negative rate (TNR)' , f"Of all the {textlabels[1]}s, we correctly identified {confusionmatrix[1,1]/sum(confusionmatrix[1]):,.0%}") 
-        m[r1 +1,c2+1 ] = f'{confusionmatrix[1,1]/sum(confusionmatrix[1]):,.0%}'
+        m[r1 +1,c2 ] = mtext('Specificity (SPC), Selectivity, True negative rate (TNR)' , f"Of all the {textlabels[1]}s, we correctly identified {confusionmatrix[1,1]/(confusionmatrix[1].sum()):,.0%}") 
+        m[r1 +1,c2+1 ] = f'{confusionmatrix[1,1]/(confusionmatrix[1].sum()):,.0%}'
 
 
 
@@ -52,29 +52,29 @@ def pretty_confusionmatrix(confusionmatrix: np.ndarray, textlabels:list=['Positi
         c2 = c1+2
 
         # regarding population
-        m[r1    ,  c1    ] = mtext('Prevalence', f"It is so likely to hit a {textlabels[0]} randomly: {sum(confusionmatrix[0])/population:,.1%}")
-        m[r1    ,  c1 + 1] = f"{sum(confusionmatrix[0])/population:,.1%}"
+        m[r1    ,  c1    ] = mtext('Prevalence', f"It is so likely to hit a {textlabels[0]} randomly: {(confusionmatrix[0].sum())/population:,.1%}")
+        m[r1    ,  c1 + 1] = f"{confusionmatrix[0].sum()/population:,.1%}"
         m[r1    ,  c2    ] = mtext('Accuracy' , f"Of all samples, we correctly identified {(confusionmatrix[0,0] + confusionmatrix[1,1])/population:,.1%}")
         m[r1    ,  c2 + 1] = f'{(confusionmatrix[0,0] + confusionmatrix[1,1])/population:,.1%}'
 
         # regarding predicted Positives
         m.merge_cells(r1 + 1,  c1, None,c1+1 )
-        m[r1 + 1,  c1    ] = mtext('Positive Predictive Value = Precision', f"Of the predicted {textlabels[0]}s, we were right in {confusionmatrix[0,0] / sum(confusionmatrix[:,0]):,.0%} of the cases.")
-        m[r1 + 1,  c1 + 2] = f'{confusionmatrix[0,0] / sum(confusionmatrix[:,0]):,.0%}'
+        m[r1 + 1,  c1    ] = mtext('Positive Predictive Value = Precision', f"Of the predicted {textlabels[0]}s, we were right in {confusionmatrix[0,0] / confusionmatrix[:,0].sum():,.0%} of the cases.")
+        m[r1 + 1,  c1 + 2] = f'{confusionmatrix[0,0] / confusionmatrix[:,0].sum():,.0%}'
         m.merge_cells(r1 + 2,  c1, None,c1+1 )
-        m[r1 +2 ,  c1    ] = mtext('False Discorvery Rate' , f"Of all predicted {textlabels[0]}s, we were wrong in {confusionmatrix[0,1] / sum(confusionmatrix[:,0]):,.0%}")
-        m[r1 +2 ,  c1 + 2] = f'{confusionmatrix[0,1] / sum(confusionmatrix[:,0]):,.0%}'
+        m[r1 +2 ,  c1    ] = mtext('False Discorvery Rate' , f"Of all predicted {textlabels[0]}s, we were wrong in {confusionmatrix[0,1] / confusionmatrix[:,0].sum():,.0%}")
+        m[r1 +2 ,  c1 + 2] = f'{confusionmatrix[0,1] / confusionmatrix[:,0].sum():,.0%}'
 
         # regarding predicted Negatives
-        m[r1 + 1,  c2 + 2 ] = mtext('False Omission Rate' , f"Of the predicted {textlabels[1]}s, {confusionmatrix[0,1] / sum(confusionmatrix[:,1]):,.0%} were in fact {textlabels[0]}s!")
-        m[r1 + 1,  c2 + 1] = f'{confusionmatrix[0,1] / sum(confusionmatrix[:,1]):,.0%}'
+        m[r1 + 1,  c2 + 2 ] = mtext('False Omission Rate' , f"Of the predicted {textlabels[1]}s, {confusionmatrix[0,1] / confusionmatrix[:,1].sum():,.0%} were in fact {textlabels[0]}s!")
+        m[r1 + 1,  c2 + 1] = f'{confusionmatrix[0,1] / confusionmatrix[:,1].sum():,.0%}'
 
-        m[r1 +2 ,  c2 +2 ] = mtext('Negative predicted Value' , f"Of all predicted {textlabels[1]}s, we correctly identified {confusionmatrix[1,1] / sum(confusionmatrix[:,1]):,.0%}")
-        m[r1 +2 ,  c2 + 1] = f'{confusionmatrix[1,1] / sum(confusionmatrix[:,1]):,.0%}'
+        m[r1 +2 ,  c2 +2 ] = mtext('Negative predicted Value' , f"Of all predicted {textlabels[1]}s, we correctly identified {confusionmatrix[1,1] / confusionmatrix[:,1].sum():,.0%}")
+        m[r1 +2 ,  c2 + 1] = f'{confusionmatrix[1,1] / confusionmatrix[:,1].sum():,.0%}'
         
         m.merge_cells(r1 + 3,  c1+2, None,c1+3 )
         m[r1 + 3,  c1 + 2] = mtext('F1 Score')
-        m[r1 + 3,  c1 + 4] = f'{2* ((confusionmatrix[0,0] / sum(confusionmatrix[:,0])) *confusionmatrix[0,0]/sum(confusionmatrix[0]) ) / (confusionmatrix[0,0] / sum(confusionmatrix[:,0]) + confusionmatrix[0,0]/sum(confusionmatrix[0]))    :,.0%}'
+        m[r1 + 3,  c1 + 4] = f'{2* ((confusionmatrix[0,0] / confusionmatrix[:,0].sum() *confusionmatrix[0,0]/confusionmatrix[0]) ) / (confusionmatrix[0,0] / confusionmatrix[:,0].sum() + confusionmatrix[0,0]/confusionmatrix[0].sum())    :,.0%}'
 
         #m.mergeCells(5,4,7,7)
     return m

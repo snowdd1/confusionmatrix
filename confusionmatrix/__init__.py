@@ -74,7 +74,7 @@ def pretty_confusionmatrix(confusionmatrix: np.ndarray, textlabels:list=['Positi
         
         m.merge_cells(r1 + 3,  c1+2, None,c1+3 )
         m[r1 + 3,  c1 + 2] = mtext('F1 Score')
-        m[r1 + 3,  c1 + 4] = f'{2* ((confusionmatrix[0,0] / confusionmatrix[:,0].sum() *confusionmatrix[0,0]/confusionmatrix[0]) ) / (confusionmatrix[0,0] / confusionmatrix[:,0].sum() + confusionmatrix[0,0]/confusionmatrix[0].sum())    :,.0%}'
+        m[r1 + 3,  c1 + 4] = f'{2* ((confusionmatrix[0,0] / confusionmatrix[:,0].sum() *confusionmatrix[0,0]/confusionmatrix[0].sum()) ) / (confusionmatrix[0,0] / confusionmatrix[:,0].sum() + confusionmatrix[0,0]/confusionmatrix[0].sum()):,.0%}'
 
         #m.mergeCells(5,4,7,7)
     return m

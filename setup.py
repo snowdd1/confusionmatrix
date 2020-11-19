@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='confusionmatrix',
-    version='0.0.3',
+    version='0.0.4',
     description='confusion matrix for jupyter notebooks',
     url='git@github.com/snowdd1/confusionmatrix.git',
     author='Raoul',
